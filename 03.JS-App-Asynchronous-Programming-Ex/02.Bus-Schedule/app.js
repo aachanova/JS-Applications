@@ -6,25 +6,31 @@ function solve() {
         name: 'Depot',
         next: 'depot'
     }
-    
-    
-    
+
+
+
     async function depart() {
         let url = `http://localhost:3030/jsonstore/bus/schedule/${stop.next}`;
-        
+
         const res = await fetch(url);
+        if (res.status !== 200) {
+            infoBoxElement.textContent = 'Error';
+            departBtnElement.disabled = true;
+            arriveBtnElement.disabled = true;
+        }
+
         const data = await res.json();
 
         stop = data;
         infoBoxElement.textContent = `Next stop ${stop.name}`;
 
         departBtnElement.disabled = true;
-        arriveBtnElement.disabled = false;      
+        arriveBtnElement.disabled = false;
     }
 
     async function arrive() {
         infoBoxElement.textContent = `Arriving at ${stop.name}`;
-        
+
         departBtnElement.disabled = false;
         arriveBtnElement.disabled = true;
     }
