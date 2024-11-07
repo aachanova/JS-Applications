@@ -9,6 +9,7 @@ async function getInfo() {
     try {
         // stopNameElement.textContent = 'Loading...';
         timeTableElement.replaceChildren();
+        // timeTableElement.innerHTML = '';
         submitBtn.disabled = true;
 
         const response = await fetch(url);
