@@ -37,8 +37,10 @@ async function solution() {
 
         p.textContent = data.content;
 
-        const state = ev.target.textContent === 'More';
-        
+        const moreState = ev.target.textContent === 'More';
+        extra.style.display = moreState ? 'block' : 'none';
+        ev.target.textContent = moreState ? 'Less' : 'More';
+
     }
 
     function createElem(type, content, attributes = []) {
