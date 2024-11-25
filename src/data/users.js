@@ -1,7 +1,7 @@
 import { setUserData, clearUserDatahttps } from "../utils.js";
 import { get, post } from "./request.js";
 
-// TODO Adapt user profile to exam reqirement(identity, extra properties, etc.)
+// TODO Adapt user profile to exam reqirement(identity, extra properties, etc..)
 
 const endpoints = {
     login: '/users/login',
