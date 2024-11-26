@@ -1,4 +1,4 @@
-import { setUserData, clearUserDatahttps } from "../utils.js";
+import { setUserData, clearUserData } from "../utils.js";
 import { get, post } from "./request.js";
 
 // TODO Adapt user profile to exam reqirement(identity, extra properties, etc..)
