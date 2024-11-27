@@ -27,5 +27,6 @@ async function loginFormSubmitHandler(e) {
     e.preventDefault();
 
     // TODO: Get form data
+    
 }   
 
