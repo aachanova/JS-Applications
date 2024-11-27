@@ -1,0 +1,10 @@
+import { get } from "./request.js";
+
+const endpoints = {
+    events: '/data/events',
+    details: 'data/events/'
+};
+
+export async function getAllEvents() {
+    return get(endpoints.events);
+}
