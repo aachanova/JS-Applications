@@ -1,7 +1,7 @@
 import { getAll } from "../api/itemsApi.js";
 import { render, html } from "../lib/lit-html.js";
 
-const template = () => html`
+const template = (items) => html`
    <!-- Dashboard page -->
       <h3 class="heading">Market</h3>
       <section id="dashboard">
@@ -29,6 +29,6 @@ const template = () => html`
 export default async function dashboardView(ctx) {
     //Implement this homeView
     const items = await getAll();
-    
-    render(template());
+
+    render(template(items));
 }
