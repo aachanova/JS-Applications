@@ -1,21 +1,33 @@
+import { getAll } from "../api/itemsApi.js";
 import { render, html } from "../lib/lit-html.js";
 
-const template = () => html`
-     <h1>It works</h1>
+const template = (items) => html`
+     <!-- Dashboard page -->
+      <h2>Solutions</h2>
+      <section id="solutions">
+        <!-- Display a div with information about every post (if any)-->
+        ${items.map(item => html`
+            <div class="solution">
+          <img src=${item.imageUrl} alt=${item.item}/>
+          <div class="solution-info">
+            <h3 class="type">${item.type}</h3>
+            <p class="description">${item.description}</p>
+            <a class="details-btn" href="/dashboard/${item._id}">Learn More</a>
+          </div>
+        </div>
+            `)}        
+      </section>
+      <!-- Display an h2 if there are no posts -->
+      ${items.length === 0
+        ? html`
+        <h2 id="no-solution">No Solutions Added.</h2>
+        `
+        : ''
+      }
+      
 `;
 
-export default async function homeView(ctx)  {
-    //Implement this pageView
-    render(template());
+export default async function dashboardView(ctx)  {
+    const items = await getAll();
+    render(template(items));
 }
-
-// async function registerFormSubmitHandler(e) {
-//     e.preventDefault();
-//     // TODO:
-//     // Get form data
-//     // Validation
-//     // Error handling
-//     // Save user data
-//     // Create request
-//     // Redirect to home page on success
-// }

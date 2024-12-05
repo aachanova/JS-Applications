@@ -1,21 +1,15 @@
-import { render, html } from "../lib/lit-html.js";
+import page from "../lib/page.js";
+import { logout } from "../api/usersApi.js";
+import { clearUserData } from "../utils/usersUtils.js";
 
-const template = () => html`
-     <h1>It works</h1>
-`;
+export default async function logoutView(ctx)  {
+    try {
+        await logout();
 
-export default async function homeView(ctx)  {
-    //Implement this pageView
-    render(template());
+        clearUserData();
+
+        page.redirect('/');
+    } catch (err) {
+        alert(err.message);
+    }
 }
-
-// async function registerFormSubmitHandler(e) {
-//     e.preventDefault();
-//     // TODO:
-//     // Get form data
-//     // Validation
-//     // Error handling
-//     // Save user data
-//     // Create request
-//     // Redirect to home page on success
-// }
