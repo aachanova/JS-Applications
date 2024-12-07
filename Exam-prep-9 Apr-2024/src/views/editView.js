@@ -1,16 +1,18 @@
+import page from "../lib/page.js";
+import { edit, getOne } from "../api/itemsApi.js";
 import { render, html } from "../lib/lit-html.js";
 
-const template = (onSubmit) => html`
+const template = (item, onSubmit) => html`
 <!-- Edit Page (Only for logged-in users) -->
       <section id="edit">
         <div class="form">
           <img class="border" src="./images/border.png" alt="" />
           <h2>Edit Solution</h2>
-          <form class="edit-form">
-            <input type="text" name="type" id="type" placeholder="Solution Type" />
-            <input type="text" name="image-url" id="image-url" placeholder="Image URL" />
-            <textarea id="description" name="description" placeholder="Description" rows="2" cols="10"></textarea>
-            <textarea id="more-info" name="more-info" placeholder="more Info" rows="2" cols="10"></textarea>
+          <form @submit=${onSubmit} class="edit-form">
+            <input type="text" value=${item.type} name="type" id="type" placeholder="Solution Type" />
+            <input type="text" value=${item.imageUrl} name="image-url" id="image-url" placeholder="Image URL" />
+            <textarea id="description" name="description" placeholder="Description" rows="2" cols="10">${item.description}</textarea>
+            <textarea id="more-info" name="more-info" placeholder="more Info" rows="2" cols="10">${item.learnMore}</textarea>
             <button type="submit">Edit</button>
           </form>
         </div>
@@ -18,23 +20,38 @@ const template = (onSubmit) => html`
 `;
 
 export default async function editView(ctx) {
-  // TODO: Implement this view
-  render(template(loginFormSubmitHandler));
+  const itemId = ctx.params.itemId;
+  const item = await getOne(itemId);
+
+  render(template(item, editFormSubmitHandler.bind(ctx)));
 }
 
-// TODO:
-// Get form data
-// Validation
-// Error handling
-// Create login request
-// Save user data
-// Redirect to home on success
+async function editFormSubmitHandler(e) {
+  e.preventDefault();
+  // console.log('edit submit');
 
-// async function TEMPLATEfORMSubmitHandler(e) {
-//   e.preventDefault();
-//   // console.log('submit');
+  const itemId = this.params.itemId;
+  const formData = new FormData(e.currentTarget);
+  
+  const data = {
+    type: formData.get('type').trim(),
+    imageUrl: formData.get('image-url').trim(),
+    description: formData.get('description').trim(),
+    learnMore: formData.get('more-info').trim()
+  }
 
-// }
+  if (!Object.values(data).every(value => !!value)) {
+    return alert('All fields are required!')
+  }
+  
+  try {
+    await edit(itemId, data);
+
+    page.redirect(`/dashboard/${itemId}/details`);
+  } catch (err) {
+    alert(err.message);
+  }
+}
 
 
 

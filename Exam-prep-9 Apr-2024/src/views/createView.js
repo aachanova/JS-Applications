@@ -35,19 +35,20 @@ async function createFormSubmitHandler(e) {
   // console.log('create submit');
 
   const formData = new FormData(e.currentTarget);
-  console.log(formData);
-  const data = Object.fromEntries(formData);
-  // console.log(data);
+  
+  const data = {
+    type: formData.get('type').trim(),
+    imageUrl: formData.get('image-url').trim(),
+    description: formData.get('description').trim(),
+    learnMore: formData.get('more-info').trim()
+  }
 
   if (!Object.values(data).every(value => !!value)) {
     return alert('All fields are required!')
   }
   
   try {
-    const { type, "image-url": imageUrl, description, "more-info": learnMore} = data;
-    await create({ type, "image-url": imageUrl, description, "more-info": learnMore});
-    console.log(create({ type, "image-url": imageUrl, description, "more-info": learnMore}));
-    
+    await create(data);   
 
     page.redirect('/dashboard');
   } catch (err) {

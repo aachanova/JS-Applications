@@ -12,7 +12,7 @@ const template = (items) => html`
           <div class="solution-info">
             <h3 class="type">${item.type}</h3>
             <p class="description">${item.description}</p>
-            <a class="details-btn" href="#">Learn More</a>
+            <a class="details-btn" href="/dashboard/${item._id}/details">Learn More</a>
           </div>
         </div>
           `)}        
